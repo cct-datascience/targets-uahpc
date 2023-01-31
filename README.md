@@ -5,11 +5,6 @@
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-output: github_document
-
-------------------------------------------------------------------------
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # hipergator-targets-ssh
@@ -55,23 +50,24 @@ easy.
     To examine the workflow, you can use `tar_visnetwork()` to see a
     graph somewhat like this:
 
-Warning message: tar_source(): these files do not exist: R
-
 ``` mermaid
 graph LR
   subgraph legend
     direction LR
+    x7420bd9270f8d27d([""Up to date""]):::uptodate --- x0a52b03877696646([""Outdated""]):::outdated
     x0a52b03877696646([""Outdated""]):::outdated --- xbf4603d6c2c2ad6b([""Stem""]):::none
   end
   subgraph Graph
     direction LR
-    xb7119b48552d1da3(["data"]):::outdated --> xe1eeca7af8e0b529(["model"]):::outdated
+    xb7119b48552d1da3(["data"]):::uptodate --> xe1eeca7af8e0b529(["model"]):::uptodate
     x6e52cb0f1668cc22(["readme"]):::outdated --> x6e52cb0f1668cc22(["readme"]):::outdated
   end
+  classDef uptodate stroke:#000000,color:#ffffff,fill:#354823;
   classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
   classDef none stroke:#000000,color:#000000,fill:#94a4ac;
   linkStyle 0 stroke-width:0px;
-  linkStyle 2 stroke-width:0px;
+  linkStyle 1 stroke-width:0px;
+  linkStyle 3 stroke-width:0px;
 ```
 
 To run the workflow, you can use `tar_make()` or you can run targets in
