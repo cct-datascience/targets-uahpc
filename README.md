@@ -5,12 +5,6 @@
 
 <!-- badges: start -->
 <!-- badges: end -->
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# hipergator-targets-ssh
-
-<!-- badges: start -->
-<!-- badges: end -->
 
 This is a minimal example of a
 [`targets`](https://docs.ropensci.org/targets/) workflow that can be run
@@ -47,8 +41,11 @@ easy.
 
 6.  Run `targets` workflow:
 
-    To examine the workflow, you can use `tar_visnetwork()` to see a
-    graph somewhat like this:
+    To run the workflow, you can use `tar_make()` or you can run targets
+    in parallel using `tar_make_clustermq()` where you supply the number
+    of parallel workers with the `workers` argument. To examine the
+    workflow, you can use `tar_visnetwork()` to see a graph somewhat
+    like this:
 
 ``` mermaid
 graph LR
@@ -69,7 +66,3 @@ graph LR
   linkStyle 1 stroke-width:0px;
   linkStyle 3 stroke-width:0px;
 ```
-
-To run the workflow, you can use `tar_make()` or you can run targets in
-parallel using `tar_make_clustermq()` where you supply the number of
-parallel workers with the `workers` argument.

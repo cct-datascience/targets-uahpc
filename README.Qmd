@@ -16,8 +16,6 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -25,11 +23,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# hipergator-targets-ssh
-
-<!-- badges: start -->
-
-<!-- badges: end -->
 
 This is a minimal example of a [`targets`](https://docs.ropensci.org/targets/) workflow that can be run on your computer or on the University of Arizona cluster computer through [Open on Demand](https://ood.hpc.arizona.edu/).  `targets` is an R package for workflow management that can save you time by automatically skipping code that doesn't need to be re-run when you make changes to your data or code.  It also makes parallelization relatively easy.
 
@@ -53,6 +46,7 @@ This is a minimal example of a [`targets`](https://docs.ropensci.org/targets/) w
 
 6. Run `targets` workflow:
     
+    To run the workflow, you can use `tar_make()` or you can run targets in parallel using `tar_make_clustermq()` where you supply the number of parallel workers with the `workers` argument.
     To examine the workflow, you can use `tar_visnetwork()` to see a graph somewhat like this:
     
 ```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -65,4 +59,4 @@ cat(
 #this should display correctly on GitHub, or code can be pasted into https://mermaid.live
 ```
 
-   To run the workflow, you can use `tar_make()` or you can run targets in parallel using `tar_make_clustermq()` where you supply the number of parallel workers with the `workers` argument.
+   
