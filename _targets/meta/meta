@@ -1,0 +1,4 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+data|stem|6afcb05a96a54f6c|43fae4011a0626f4|136bf5e07fbd9b1c|1588979285||t19388.6570147969s|d07e2e962de596ec|1750|rds|local|vector|||0.005||
+model|stem|9a90b1b913ca376e|ae83bc723fe2997c|326e0a6129599004|1816327236||t19388.6570149369s|1254f8a9a0ffbd1f|107|rds|local|vector|||0.005||
+readme|stem|5a71d8fddfc5ed43|d8c7f1c56ebc0ac0|4745aa592080ea1d|-165896733|README.html*README.Qmd|t19388.6570140672s|0c75d36a474d0ba3|628635|file|local|vector|||1.975||
