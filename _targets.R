@@ -12,18 +12,10 @@ library(fs)
 # You'll need to replace this with your HPC group name.  You can discover the name by running `va` when logged into the HPC.
 hpc_group <- "kristinariemer" #TODO maybe get this from .Renviron var instead
 
-# This constructs a path for the targets store in groups/groupname/project rather than in /home/username (which only has 50GB storage)
-# wd <- getwd()
-# store <- path("/groups", hpc_group, path_file(wd), "_targets")
-# link_create(store, "_targets/")
-# 
-# tar_config_set(store = store)
-
 # Set target options:
 tar_option_set(
   packages = c("tibble"), # Packages that your targets need for their tasks.
   
-
   # To run on multiple workers using the UA HPC you need to set the controller
   # to crew_controller_slurm(). This example controller uses 3 workers with 1
   # CPU and 4GB memory per worker. Unfortunately, due to constrainsts of the UA
