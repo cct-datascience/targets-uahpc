@@ -9,7 +9,7 @@ library(tarchetypes) # Load other packages as needed.
 library(crew.cluster)
 
 # You'll need to replace this with your HPC group name.  You can discover the name by running `va` when logged into the HPC.
-hpc_group <- "my_group_name"
+hpc_group <- "kristinariemer" #TODO maybe get this from .Renviron var instead
 
 # Set target options:
 tar_option_set(
