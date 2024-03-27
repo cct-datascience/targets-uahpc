@@ -48,6 +48,7 @@ tar_plan(
     data_raw,
     tibble(x = rnorm(100), y = rnorm(100), z = rnorm(100))
   ),
+  #this just simulates a long-running step
   tar_target(
     data,
     do_stuff(data_raw),
@@ -56,13 +57,18 @@ tar_plan(
     model1,
     lm(y ~ x, data = data)
   ),
+  #these three models should be run in parallel as three separate SLURM jobs
   tar_target(
     model2,
     lm(y ~ x + z, data = data)
   ),
   tar_target(
+    model3,
+    lm(y ~ x*z, data = data)
+  ),
+  tar_target(
     model_compare,
-    AIC(model1, model2)
+    AIC(model1, model2, model3)
   )
 )
 
