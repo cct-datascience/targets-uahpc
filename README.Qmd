@@ -36,29 +36,11 @@ This is a minimal example of a [`targets`](https://docs.ropensci.org/targets/) w
 
 ## To Use:
 
-1.  Click the green "Use this template" button to make a copy into your own GitHub account
-
-2.  In your copy of the template, click the green "Code" button and copy the URL ending in .git
-
-3.  Open RStudio, click File > New Project...
-
-4.  Select "Version Control" then "Git" and paste in the .git URL from step 2. Click "create project" to open the project.
-
-5.  This project uses [`renv`](https://rstudio.github.io/renv/articles/renv.html) to manage R package dependencies. Run `renv::restore()` in the R console to install all needed packages.
-
-6. Run `targets` workflow:
-    
-    To run the workflow, you can use `tar_make()` or you can run targets in parallel using `tar_make_clustermq()` where you supply the number of parallel workers with the `workers` argument.
-    To examine the workflow, you can use `tar_visnetwork()` to see a graph somewhat like this:
-    
-```{r echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
-cat(
-  "```mermaid",
-  targets::tar_mermaid(targets_only = FALSE),
-  "```",
-  sep = "\n"
-)
-#this should display correctly on GitHub, or code can be pasted into https://mermaid.live
-```
-
-   
+1. SSH into the UA HPC
+2. Start an interactive sesssion, e.g. with `elgato && interactive -a <username>`
+3. Clone this repo `git clone https://github.com/cct-datascience/targets-uahpc.git`
+4. Load R with `module load R`
+5. Launch R from within the `targets-uahpc/` directory with `R`
+6. `renv` should install itself.  After it is done, you can install all necessary R packages with `renv::restore()`
+7. Customize the controller....
+8. Run `tar_make()`

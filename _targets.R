@@ -6,10 +6,11 @@
 # Load packages required to define the pipeline:
 library(targets)
 library(tarchetypes) # Load other packages as needed.
+library(crew.cluster)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble") # Packages that your targets need for their tasks.
+  packages = c("tibble"), # Packages that your targets need for their tasks.
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # Pipelines that take a long time to run may benefit from
@@ -42,6 +43,20 @@ tar_option_set(
   #   )
   #
   # Set other options as needed.
+  controller = crew.cluster::crew_controller_slurm(
+    workers = 3,
+    seconds_idle = 120,
+    slurm_partition = "standard",
+    slurm_time_minutes = 60, #wall time for each worker
+    slurm_log_output = "crew_log_%A.out",
+    slurm_log_error = "crew_log_%A.err",
+    slurm_memory_gigabytes_per_cpu = 4,
+    slurm_cpus_per_task = 1,
+    script_lines = c(
+      "#SBATCH --account kristinariemer", #not sure if I did this right
+      "module load R"
+      )
+  )
 )
 
 # Run the R scripts in the R/ folder with your custom functions:
@@ -58,7 +73,6 @@ tar_plan(
   tar_target(
     name = model,
     command = coefficients(lm(y ~ x, data = data))
-  ),
-  tar_render(readme, "README.Qmd")
+  )
 )
 
