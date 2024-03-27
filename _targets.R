@@ -67,12 +67,16 @@ tar_source()
 tar_plan(
   tar_target(
     name = data,
-    command = tibble(x = rnorm(100), y = rnorm(100))
+    command = tibble(x = rnorm(100), y = rnorm(100), z = rnorm(100))
     #   format = "feather" # efficient storage of large data frames
   ),
   tar_target(
     name = model,
     command = coefficients(lm(y ~ x, data = data))
+  ),
+  tar_target(
+    name = model2,
+    command = coefficients(lm(y ~ x + z, data = data))
   )
 )
 
