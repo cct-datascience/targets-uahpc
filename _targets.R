@@ -13,9 +13,11 @@ library(fs)
 hpc_group <- "kristinariemer" #TODO maybe get this from .Renviron var instead
 
 # This constructs a path for the targets store in groups/groupname/project rather than in /home/username (which only has 50GB storage)
-wd <- getwd()
-store <- path("/groups", hpc_group, path_file(wd))
-tar_config_set(store = store)
+# wd <- getwd()
+# store <- path("/groups", hpc_group, path_file(wd), "_targets")
+# link_create(store, "_targets/")
+# 
+# tar_config_set(store = store)
 
 # Set target options:
 tar_option_set(
