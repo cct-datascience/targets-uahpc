@@ -12,16 +12,11 @@ library(fs)
 # You'll need to replace this with your HPC group name.  You can discover the name by running `va` when logged into the HPC.
 hpc_group <- "kristinariemer" #TODO maybe get this from .Renviron var instead
 
-# Set target options:
-tar_option_set(
-  packages = c("tibble"), # Packages that your targets need for their tasks.
-  
-  # To run on multiple workers using the UA HPC you need to set the controller
-  # to crew_controller_slurm(). This example controller uses 3 workers with 1
-  # CPU and 4GB memory per worker. Unfortunately, due to constrainsts of the UA
-  # HPC this must be run from *on* the HPC and therefore the `tls` argument to
-  # crew_controller_slurm() must remain as default.
-  controller = crew.cluster::crew_controller_slurm(
+# Detect whether you're on HPC & not with an Open On Demand session (which cannot submit SLURM jobs) and set appropriate controller
+slurm_host <- Sys.getenv("SLURM_SUBMIT_HOST")
+
+if (grepl("hpc\\.arizona\\.edu", slurm_host) & !grepl("ood", slurm_host)) {
+  controller <- crew.cluster::crew_controller_slurm(
     workers = 3,
     seconds_idle = 120, #time until workers are shut down after idle
     slurm_partition = "standard",
@@ -34,9 +29,16 @@ tar_option_set(
       paste0("#SBATCH --account ", hpc_group),
       "module load R"
       #add additional lines to the SLURM job script as necessary here
-      )
+    )
   )
-  #to test locally, comment the above controller out to use the default.
+} else {
+  controller <- crew::crew_controller_local(workers = 3, seconds_idle = 60)
+}
+
+# Set target options:
+tar_option_set(
+  packages = c("tibble"), # Packages that your targets need for their tasks.
+  controller = controller
 )
 
 # Run the R scripts in the R/ folder with your custom functions:
