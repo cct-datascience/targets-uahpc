@@ -33,7 +33,8 @@ tar_option_set(
     slurm_cpus_per_task = 1,
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
-      "module load R"
+      "module load R",
+      "module load gdal"
       #add additional lines to the SLURM job script as necessary here
       )
   )
