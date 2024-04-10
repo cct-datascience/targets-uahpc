@@ -6,6 +6,7 @@
 # Load packages required to define the pipeline:
 library(targets)
 library(tarchetypes) # Load other packages as needed.
+library(geotargets)
 library(crew.cluster)
 library(fs)
 
@@ -14,7 +15,7 @@ hpc_group <- "kristinariemer" #TODO maybe get this from .Renviron var instead
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble"), # Packages that your targets need for their tasks.
+  packages = c("tibble", "terra"), # Packages that your targets need for their tasks.
   
   # To run on multiple workers using the UA HPC you need to set the controller
   # to crew_controller_slurm(). This example controller uses 3 workers with 1
@@ -70,6 +71,10 @@ tar_plan(
   tar_target(
     model_compare,
     AIC(model1, model2, model3)
+  ),
+  tar_terra_rast(
+    raster,
+    system.file("ex/elev.tif", package = "terra") |> terra::rast()
   )
 )
 
