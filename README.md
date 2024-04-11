@@ -30,11 +30,11 @@ It also makes parallelization relatively easy by allowing you to define each tar
 
 ## Notes:
 
-The `_targets/` store can grow to be quite large depending on the size of data and the number of targets created. 
+The `_targets/` store can grow to be quite large depending on the size of data and the number of targets created.
 Your home folder on the HPC only allows 50GB of storage, so it may be wise to clone this to `/groups/<groupname>/` instead, which by default has 500GB of storage.
 `targets` can optionally use cloud storage, which has the benefit of making completed targets easily accessible on a local machine.
 See the [targets manual](https://books.ropensci.org/targets/cloud-storage.html) for more info on setting up cloud storage.
 
 Because of restrictions that UAHPC has on running processes on login nodes, the `tls` option to `crew.cluster::crew_controller_slurm()` should not be used.
-That is, you cannot run `tar_make()` locally (e.g. on your laptop) and have it start SLURM jobs on the HPC. 
+That is, you cannot run `tar_make()` locally (e.g. on your laptop) and have it start SLURM jobs on the HPC.
 Code in `_targets.R` will attempt to detect if you are able to launch SLURM jobs and if not (e.g. you are not on the HPC or are using Open On Demand) it will fall back to using `crew::crew_controller_local()`.

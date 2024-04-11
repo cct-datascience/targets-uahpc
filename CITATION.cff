@@ -1,0 +1,27 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: targets-uahpc
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Eric R.
+    family-names: Scott
+    email: ericrscott@arizona.edu
+    affiliation: >-
+      University of Arizona, Communications & Cyber
+      Technologies Data Science
+    orcid: 'https://orcid.org/0000-0002-7430-7879'
+repository-code: 'https://github.com/cct-datascience/targets-uahpc'
+abstract: >-
+  A template for using the `targets` R package for workflow
+  management with the University of Arizona high performance
+  computing cluster.
+keywords:
+  - targets
+  - hpc
+license: MIT
+version: 0.0.1
