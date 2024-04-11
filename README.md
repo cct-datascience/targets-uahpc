@@ -30,8 +30,7 @@ It also makes parallelization relatively easy by allowing you to define each tar
 
 ## Notes:
 
-The `targets` package stores intermediate objects in a `_targets/` folder in the project root by default.
-You can [configure a different target store](https://books.ropensci.org/targets/data.html#local-data-store) with `tar_config_set()` or by creating a `_targets.yaml` file.
-Your home folder on the HPC only allows 50GB of storage, so it may be wise to use a folder in `/groups/<groupname>/` instead.
-The best way to do this is probably to create a symlink from your project to a folder created in `/groups/<groupname>/` and to specify this symlink as your targets store.
-I haven’t had a chance to test this setup yet, so please let me know how it goes if you try it.
+The `_targets/` store can grow to be quite large depending on the size of data and the number of targets created. 
+Your home folder on the HPC only allows 50GB of storage, so it may be wise to clone this to `/groups/<groupname>/` instead, which by default has 500GB of storage.
+`targets` can optionally use cloud storage, which has the benefit of making completed targets easily accessible on a local machine.
+See the [targets manual](https://books.ropensci.org/targets/cloud-storage.html) for more info on setting up cloud storage.
