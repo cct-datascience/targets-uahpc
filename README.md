@@ -21,9 +21,9 @@ It also makes parallelization relatively easy by allowing you to define each tar
 1.  Click the “Use this template” button to create a repo under your own GitHub user name.
 2.  Modify the HPC group name in `_targets.R` to be your PI group.
 3.  [SSH into the UA HPC](https://uarizona.atlassian.net/wiki/spaces/UAHPC/pages/75990560/System+Access).
-4.  Start an interactive session on the HPC, e.g. with `elgato && interactive -a <groupname>` .
-5.  Clone this repo on the HPC, e.g. with `git clone https://github.com/your-user-name/targets-uahpc.git`.
-6.  On the HPC, load R with `module load R`.
+4.  Clone this repo on the HPC, e.g. with `git clone https://github.com/your-user-name/targets-uahpc.git`.
+5.  Start an interactive session on the HPC, e.g. with `interactive -a <groupname>` .
+6.  Load R with `module load R`.
 7.  Launch R from within the `targets-uahpc/` directory with the `R` command
 8.  The [`renv` package](https://rstudio.github.io/renv/) should install itself. After it is done, you can install all necessary R packages by running `renv::restore()`.
 9.  Run `tar_make()` to start the pipeline.
