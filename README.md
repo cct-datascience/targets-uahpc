@@ -16,17 +16,36 @@ It also makes parallelization relatively easy by allowing you to define each tar
 -   Some familiarity with R, RStudio, and the `targets` package
 -   A GitHub account
 
-## To Use:
+## To set-up:
 
 1.  Click the “Use this template” button to create a repo under your own GitHub user name.
 2.  Modify the HPC group name in `_targets.R` to be your PI group.
 3.  [SSH into the UA HPC](https://uarizona.atlassian.net/wiki/spaces/UAHPC/pages/75990560/System+Access).
-4.  Clone this repo on the HPC, e.g. with `git clone https://github.com/your-user-name/targets-uahpc.git`.
-5.  Start an interactive session on the HPC, e.g. with `interactive -a <groupname>` .
+4.  Clone this repo on the HPC, e.g. with `git clone https://github.com/your-user-name/targets-uahpc.git`.
+5.  Start an interactive session on the HPC, e.g. with `interactive -a <groupname>` .
 6.  Load R with `module load R`.
 7.  Launch R from within the `targets-uahpc/` directory with the `R` command
 8.  The [`renv` package](https://rstudio.github.io/renv/) should install itself. After it is done, you can install all necessary R packages by running `renv::restore()`.
-9.  Run `tar_make()` to start the pipeline.
+
+## Running the pipeline
+
+There are several ways you can run the pipeline that each have pros and cons:
+
+1. Using RStudio running on Open OnDemand
+2. From R running on the command line
+3. By submitting `run.sh` as a SLURM job
+
+### Open OnDemand
+
+Log in to the [Open OnDemand app dashboard](https://ood.hpc.arizona.edu/pun/sys/dashboard/apps/index).  Choose an RStudio Server session and start a session specifying cores, memory per core, wall-time etc. (it is a major downside of this method that you have to estimate a wall-time for the main process).  Keep in mind, that with this method `targets` won't launch workers as SLURM jobs, but as separate R processes using the cores you select, so be sure to request a large enough allocation to support the workers. From RStudio use the File > Open Project... menu and navigate to the .Rproj file for this project.  Then, from the console, run `targets::tar_make()` optionally with the `as_job = TRUE` argument to run it as a background process.  You can occasionally check the progress of the pipeline in a variety of ways including `targets::tar_visnetwork()`
+
+### From R
+
+SSH into the HPC, navigate to this project, and request an interactive session with `interactive -a <groupname> -t <HH:MM:SS>` where you replace the groupname with your group name, and the time stamp with how ever long you think the pipeline will take to run (it is a major downside of this method that you have to estimate a wall-time for the main process). Load R with `module load R` and launch it with `R`. Then you can run `targets::tar_make()` to kick off the pipeline and watch the progress in the R console. 
+
+### With `run.sh`
+
+SSH into the HPC, navigate to this project, and run `sbatch run.sh`. You can watch progress by occasionally running `squeue -u yourusername` to see the workers launch and you can peek at the `logs/` folder. You can find the most recently modified files with something like `ls -lt | head -n 5` and then you can read the logs with `cat targets_main_9814039.out` (or whatever file name you want to read).
 
 ## Notes:
 
@@ -35,6 +54,4 @@ Your home folder on the HPC only allows 50GB of storage, so it may be wise to cl
 `targets` can optionally use cloud storage, which has the benefit of making completed targets easily accessible on a local machine.
 See the [targets manual](https://books.ropensci.org/targets/cloud-storage.html) for more info on setting up cloud storage.
 
-Because of restrictions that UAHPC has on running processes on login nodes, the `tls` option to `crew.cluster::crew_controller_slurm()` should not be used.
-That is, you cannot run `tar_make()` locally (e.g. on your laptop) and have it start SLURM jobs on the HPC.
 Code in `_targets.R` will attempt to detect if you are able to launch SLURM jobs and if not (e.g. you are not on the HPC or are using Open On Demand) it will fall back to using `crew::crew_controller_local()`.
