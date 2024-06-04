@@ -5,41 +5,66 @@
 
 # Load packages required to define the pipeline:
 library(targets)
-library(tarchetypes) # Load other packages as needed.
+library(tarchetypes) 
 library(crew.cluster)
-library(fs)
 
 # You'll need to replace this with your HPC group name.  You can discover the name by running `va` when logged into the HPC.
-hpc_group <- "kristinariemer" #TODO maybe get this from .Renviron var instead
+hpc_group <- "kristinariemer" 
 
 # Detect whether you're on HPC & not with an Open On Demand session (which cannot submit SLURM jobs) and set appropriate controller
 slurm_host <- Sys.getenv("SLURM_SUBMIT_HOST")
+hpc <- grepl("hpc\\.arizona\\.edu", slurm_host) & !grepl("ood", slurm_host)
 
-# If on HPC, use SLURM jobs for parallel workers
-if (grepl("hpc\\.arizona\\.edu", slurm_host) & !grepl("ood", slurm_host)) {
-  controller <- crew.cluster::crew_controller_slurm(
-    workers = 3,
-    seconds_idle = 120, #time until workers are shut down after idle
-    slurm_partition = "standard",
-    slurm_time_minutes = 60, #wall time for each worker
-    slurm_log_output = "logs/crew_log_%A.out",
-    slurm_log_error = "logs/crew_log_%A.err",
-    slurm_memory_gigabytes_per_cpu = 4,
-    slurm_cpus_per_task = 1,
-    script_lines = c(
-      paste0("#SBATCH --account ", hpc_group),
-      "module load R"
-      #add additional lines to the SLURM job script as necessary here
-    )
+# Set up potential controllers
+controller_hpc_small <- crew.cluster::crew_controller_slurm(
+  name = "hpc_small",
+  workers = 2,
+  seconds_idle = 1000, #keep these more persistant since they're hard to get 
+  slurm_partition = "standard",
+  slurm_time_minutes = 1200, #wall time for each worker
+  slurm_log_output = "logs/crew_log_%A.out",
+  slurm_log_error = "logs/crew_log_%A.err",
+  slurm_memory_gigabytes_per_cpu = 5,
+  slurm_cpus_per_task = 2, #total 10gb RAM
+  script_lines = c(
+    paste0("#SBATCH --account ", hpc_group),
+    "module load R"
+    #add additional lines to the SLURM job script as necessary here
   )
-} else { # If local or on OOD session, use multiple R sessions for workers
-  controller <- crew::crew_controller_local(workers = 3, seconds_idle = 60)
-}
+)
+
+controller_hpc_large <- crew.cluster::crew_controller_slurm(
+  name = "hpc_large",
+  workers = 2,
+  seconds_idle = 120, #time until workers are shut down after idle (a new worker will be launched when new tasks are ready)
+  slurm_partition = "standard",
+  slurm_time_minutes = 1200, #wall time for each worker
+  slurm_log_output = "logs/crew_log_%A.out",
+  slurm_log_error = "logs/crew_log_%A.err",
+  slurm_memory_gigabytes_per_cpu = 5,
+  slurm_cpus_per_task = 4, #total 20gb RAM
+  script_lines = c(
+    paste0("#SBATCH --account ", hpc_group),
+    "module load R"
+    #add additional lines to the SLURM job script as necessary here
+  )
+)
+
+controller_local <- crew::crew_controller_local(
+  name = "local",
+  workers = 4,
+  seconds_idle = 60,
+  local_log_directory = "logs/"
+)
 
 # Set target options:
 tar_option_set(
   packages = c("tibble"), # Packages that your targets need for their tasks.
-  controller = controller
+  controller = crew::crew_controller_group(controller_local, controller_hpc_large, controller_hpc_small),
+  resources = tar_resources(
+    #if on HPC use "hpc_small" controller by default, otherwise use "local"
+    crew = tar_resources_crew(controller = ifelse(hpc, "hpc_small", "local"))
+  )
 )
 
 # Run the R scripts in the R/ folder with your custom functions:
@@ -68,7 +93,11 @@ tar_plan(
   ),
   tar_target(
     model3,
-    lm(y ~ x*z, data = data)
+    lm(y ~ x*z, data = data),
+    #for this target only, use a worker with more cores and RAM
+    resources = tar_resources(
+      crew = tar_resources_crew(controller = ifelse(hpc, "hpc_large", "local"))
+    )
   ),
   tar_target(
     model_compare,
