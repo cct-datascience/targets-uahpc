@@ -19,9 +19,9 @@ hpc <- grepl("hpc\\.arizona\\.edu", slurm_host) & !grepl("ood", slurm_host)
 controller_hpc_small <- crew.cluster::crew_controller_slurm(
   name = "hpc_small",
   workers = 2,
-  seconds_idle = 1000, #keep these more persistant since they're hard to get 
-  slurm_partition = "standard",
-  slurm_time_minutes = 1200, #wall time for each worker
+  seconds_idle = 300,  # time until workers are shut down after idle
+  slurm_partition = "standard", 
+  slurm_time_minutes = 1200, # wall time for each worker
   slurm_log_output = "logs/crew_log_%A.out",
   slurm_log_error = "logs/crew_log_%A.err",
   slurm_memory_gigabytes_per_cpu = 5,
@@ -36,9 +36,9 @@ controller_hpc_small <- crew.cluster::crew_controller_slurm(
 controller_hpc_large <- crew.cluster::crew_controller_slurm(
   name = "hpc_large",
   workers = 2,
-  seconds_idle = 120, #time until workers are shut down after idle (a new worker will be launched when new tasks are ready)
+  seconds_idle = 500, 
   slurm_partition = "standard",
-  slurm_time_minutes = 1200, #wall time for each worker
+  slurm_time_minutes = 2000, 
   slurm_log_output = "logs/crew_log_%A.out",
   slurm_log_error = "logs/crew_log_%A.err",
   slurm_memory_gigabytes_per_cpu = 5,
@@ -64,7 +64,11 @@ tar_option_set(
   resources = tar_resources(
     #if on HPC use "hpc_small" controller by default, otherwise use "local"
     crew = tar_resources_crew(controller = ifelse(hpc, "hpc_small", "local"))
-  )
+  ),
+  # It should be safe to assume that all workers have read/write access to the
+  # _targets/ directory.  These setting should speed things up.
+  storage = "worker",
+  retrieval = "worker"
 )
 
 # Run the R scripts in the R/ folder with your custom functions:
