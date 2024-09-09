@@ -13,7 +13,7 @@ It also makes parallelization relatively easy by allowing you to define each tar
 ## Prerequisites:
 
 -   [A UA HPC account](https://uarizona.atlassian.net/wiki/spaces/UAHPC/pages/75990889/Account+Creation)
--   Some familiarity with R, RStudio, and the `targets` package
+-   Some familiarity with R, RStudio, the [`renv` pacakge](https://rstudio.github.io/renv/articles/renv.html), and the [`targets` package](https://books.ropensci.org/targets/)
 -   A GitHub account
 
 ## To set-up:
@@ -21,7 +21,7 @@ It also makes parallelization relatively easy by allowing you to define each tar
 To get this bare-bones pipeline running on the HPC:
 
 1.  Click the “Use this template” button to create a repo under your own GitHub user name.
-2.  Modify the HPC group name in `_targets.R` to be your PI group.
+2.  Modify the HPC group name in `_targets.R` and in `run.sh` to be your PI group.
 3.  [SSH into the UA HPC](https://uarizona.atlassian.net/wiki/spaces/UAHPC/pages/75990560/System+Access).
 4.  Clone this repo on the HPC, e.g. with `git clone https://github.com/your-user-name/targets-uahpc.git`.
 5.  Start an interactive session on the HPC, e.g. with `interactive -a <groupname>` .
@@ -31,6 +31,10 @@ To get this bare-bones pipeline running on the HPC:
 
 To modify the pipeline to run *your* code, you'll need to edit the list of targets in `_targets.R` as well as functions in the `R/` folder.
 See the [targets manual](https://books.ropensci.org/targets/) for more information.
+
+Note that use of the `renv` package for tracking dependencies isn't strictly necessary, but it does simplify package installation on the HPC.
+As you add R packages dependencies, you can use `targets::tar_renv()` to update the `_targets_packages.R` file and then `renv::snapshot()` to add them to `renv.lock`.
+On the HPC, running `renv::restore()` not only installs any missing R packages, it also automatically detects system dependencies and lets you know if they aren't installed.
 
 ## Running the pipeline
 
