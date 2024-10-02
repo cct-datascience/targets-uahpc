@@ -21,11 +21,11 @@ It also makes parallelization relatively easy by allowing you to define each tar
 
 ### Overview
 
-Below are some step-by-step instructions to create a GitHub repo from this template, clone your repo to the HPC, install R packages with `renv`, modify some user-specific configuration, then run the workflow.
-These instructions take advantage of the RStudio GUI you can get with Open OnDemand, but you can use the command line if you're familiar with it.
+Below are some step-by-step instructions to create a GitHub repo from this template, clone your repo to the HPC, install necessary R packages, and modify some user-specific configuration.
+The set-up instructions take advantage of the RStudio GUI you can get with Open OnDemand, but you can use the command line if you're familiar with it.
 
 1.  On this page, click the “Use this template” button to create a repo under your own GitHub user name.
-2.  Start a new Open OnDemand RStudio session [here](https://ood.hpc.arizona.edu/pun/sys/dashboard/batch_connect/sys/UAz_rstudio/session_contexts/new) (you only need 1 core for this)
+2.  Start a new Open OnDemand RStudio session [here](https://ood.hpc.arizona.edu/pun/sys/dashboard/batch_connect/sys/UAz_rstudio/session_contexts/new) (you likely only need 1 or 2 cores for this)
 3.  Once RStudio launches in your browser, create a new project from your GitHub repository (E.g. using the [RStudio new project wizard](https://happygitwithr.com/existing-github-first#rstudio-ide-1)).
 4.  The [`renv` package](https://rstudio.github.io/renv/) should install itself and prompt you to run `renv::restore()` to install all needed packages.
 5.  Modify the HPC group name in `_targets.R` and in `run.sh` to be your PI group.
@@ -54,6 +54,9 @@ From RStudio use the File \> Open Project...
 menu and navigate to the .Rproj file for this project.
 Then, from the console, run `targets::tar_make()` optionally with the `as_job = TRUE` argument to run it as a background process.
 You can occasionally check the progress of the pipeline in a variety of ways including `targets::tar_visnetwork()`.
+
+> [!NOTE] 
+> Open OnDemand doesn't support loading modules, so if your pipeline uses any R packages with system dependencies, you may not be able to use this method.
 
 ### From R
 
