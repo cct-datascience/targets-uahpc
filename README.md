@@ -15,26 +15,27 @@ It also makes parallelization relatively easy by allowing you to define each tar
 -   [A UA HPC account](https://uarizona.atlassian.net/wiki/spaces/UAHPC/pages/75990889/Account+Creation)
 -   Some familiarity with R, RStudio, the [`renv` pacakge](https://rstudio.github.io/renv/articles/renv.html), and the [`targets` package](https://books.ropensci.org/targets/)
 -   A GitHub account
+-   Some familiarity with creating new RStudio projects from git—<https://happygitwithr.com/> is a great place to get started
 
 ## To set-up:
 
-To get this bare-bones pipeline running on the HPC:
+### Overview
 
-1.  Click the “Use this template” button to create a repo under your own GitHub user name.
-2.  Modify the HPC group name in `_targets.R` and in `run.sh` to be your PI group.
-3.  [SSH into the UA HPC](https://uarizona.atlassian.net/wiki/spaces/UAHPC/pages/75990560/System+Access).
-4.  Clone this repo on the HPC, e.g. with `git clone https://github.com/your-user-name/targets-uahpc.git`.
-5.  Start an interactive session on the HPC, e.g. with `interactive -a <groupname>` .
-6.  Load R with `module load R`.
-7.  Launch R from within the `targets-uahpc/` directory with the `R` command
-8.  The [`renv` package](https://rstudio.github.io/renv/) should install itself. After it is done, you can install all necessary R packages by running `renv::restore()`.
+Below are some step-by-step instructions to create a GitHub repo from this template, clone your repo to the HPC, install R packages with `renv`, modify some user-specific configuration, then run the workflow.
+These instructions take advantage of the RStudio GUI you can get with Open OnDemand, but you can use the command line if you're familiar with it.
+
+1.  On this page, click the “Use this template” button to create a repo under your own GitHub user name.
+2.  Start a new Open OnDemand RStudio session [here](https://ood.hpc.arizona.edu/pun/sys/dashboard/batch_connect/sys/UAz_rstudio/session_contexts/new) (you only need 1 core for this)
+3.  Once RStudio launches in your browser, create a new project from your GitHub repository (E.g. using the [RStudio new project wizard](https://happygitwithr.com/existing-github-first#rstudio-ide-1)).
+4.  The [`renv` package](https://rstudio.github.io/renv/) should install itself and prompt you to run `renv::restore()` to install all needed packages.
+5.  Modify the HPC group name in `_targets.R` and in `run.sh` to be your PI group.
 
 To modify the pipeline to run *your* code, you'll need to edit the list of targets in `_targets.R` as well as functions in the `R/` folder.
 See the [targets manual](https://books.ropensci.org/targets/) for more information.
 
 Note that use of the `renv` package for tracking dependencies isn't strictly necessary, but it does simplify package installation on the HPC.
 As you add R packages dependencies, you can use `targets::tar_renv()` to update the `_targets_packages.R` file and then `renv::snapshot()` to add them to `renv.lock`.
-On the HPC, running `renv::restore()` not only installs any missing R packages, it also automatically detects system dependencies and lets you know if they aren't installed.
+On the HPC, running `renv::restore()` not only installs any missing R packages, it also automatically detects system dependencies and lets you know if they aren't installed or loaded.
 
 ## Running the pipeline
 
