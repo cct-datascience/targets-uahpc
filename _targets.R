@@ -7,6 +7,7 @@
 library(targets)
 library(tarchetypes) 
 library(crew.cluster)
+library(autometric) #for logging
 
 # You'll need to replace this with your HPC group name.  You can discover the name by running `va` when logged into the HPC.
 hpc_group <- "kristinariemer" 
