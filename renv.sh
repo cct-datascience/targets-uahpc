@@ -12,5 +12,6 @@
 # Load necessary modules
 module load R/4.3
 
-# Start targets pipeline
+# Sync with renv.lock using `pak` for installation
+export RENV_CONFIG_PAK_ENABLED=TRUE
 R -e 'renv::restore()'
