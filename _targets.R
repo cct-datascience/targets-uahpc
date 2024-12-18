@@ -8,7 +8,7 @@ library(targets)
 library(tarchetypes) 
 library(crew)
 library(crew.cluster)
-library(autometric) #for logging
+# library(autometric) #Optional, for logging CPU and RAM usage.  Useful for making appropriate sized workers
 
 # You'll need to replace this with your HPC group name.  You can discover the name by running `va` when logged into the HPC.
 hpc_group <- "kristinariemer" 
@@ -23,10 +23,11 @@ controller_hpc_small <- crew.cluster::crew_controller_slurm(
   name = "hpc_small",
   workers = 2,
   seconds_idle = 300,  # time until workers are shut down after idle
-  options_metrics = crew_options_metrics(
-    path = "/dev/stdout",
-    seconds_interval = 1
-  ),
+  ## Uncomment to add logging via the autometric package
+  # options_metrics = crew_options_metrics(
+  #   path = "/dev/stdout",
+  #   seconds_interval = 1
+  # ),
   options_cluster = crew.cluster::crew_options_slurm(
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
@@ -46,10 +47,11 @@ controller_hpc_large <- crew.cluster::crew_controller_slurm(
   name = "hpc_large",
   workers = 2,
   seconds_idle = 2000,  # time until workers are shut down after idle
-  options_metrics = crew_options_metrics(
-    path = "/dev/stdout",
-    seconds_interval = 1
-  ),
+  ## Uncomment to add logging via the autometric package
+  # options_metrics = crew_options_metrics(
+  #   path = "/dev/stdout",
+  #   seconds_interval = 1
+  # ),
   options_cluster = crew.cluster::crew_options_slurm(
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
@@ -69,10 +71,11 @@ controller_local <- crew_controller_local(
   name = "local",
   workers = 2,
   options_local = crew::crew_options_local(log_directory = "logs"),
-  options_metrics = crew::crew_options_metrics(
-    path = "/dev/stdout",
-    seconds_interval = 1
-  )
+  ## Uncomment to add logging via the autometric package
+  # options_metrics = crew::crew_options_metrics(
+  #   path = "/dev/stdout",
+  #   seconds_interval = 1
+  # )
 )
 
 # Set target options:
