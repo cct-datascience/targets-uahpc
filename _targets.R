@@ -46,7 +46,7 @@ controller_hpc_small <- crew.cluster::crew_controller_slurm(
 controller_hpc_large <- crew.cluster::crew_controller_slurm(
   name = "hpc_large",
   workers = 2,
-  seconds_idle = 2000,  # time until workers are shut down after idle
+  seconds_idle = 300,  # time until workers are shut down after idle
   ## Uncomment to add logging via the autometric package
   # options_metrics = crew_options_metrics(
   #   path = "/dev/stdout",
