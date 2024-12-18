@@ -10,7 +10,7 @@
 #SBATCH -o logs/%x_%j.out
 
 # Load necessary modules
-module load R/4.3
+module load R/4.4
 
 # Start targets pipeline
 R -e 'targets::tar_make()'
