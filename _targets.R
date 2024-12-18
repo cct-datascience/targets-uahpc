@@ -33,8 +33,8 @@ controller_hpc_small <- crew.cluster::crew_controller_slurm(
       "module load R/4.4"
       #add additional lines to the SLURM job script as necessary here
     ),
-    log_output = "logs/crew_log_%A.out",
-    log_error = "logs/crew_log_%A.err",
+    log_output = "logs/crew_small_log_%A.out",
+    log_error = "logs/crew_small_log_%A.err",
     memory_gigabytes_per_cpu = 5,
     cpus_per_task = 2, #total 10gb RAM
     time_minutes = 1200, # wall time for each worker
@@ -56,8 +56,8 @@ controller_hpc_large <- crew.cluster::crew_controller_slurm(
       "module load R/4.4"
       #add additional lines to the SLURM job script as necessary here
     ),
-    log_output = "logs/crew_log_%A.out",
-    log_error = "logs/crew_log_%A.err",
+    log_output = "logs/crew_large_log_%A.out",
+    log_error = "logs/crew_large_log_%A.err",
     memory_gigabytes_per_cpu = 5,
     cpus_per_task = 4, #total 10gb RAM
     time_minutes = 1200, # wall time for each worker
