@@ -30,7 +30,7 @@ controller_hpc_small <- crew.cluster::crew_controller_slurm(
   options_cluster = crew.cluster::crew_options_slurm(
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
-      "module load R"
+      "module load R/4.4"
       #add additional lines to the SLURM job script as necessary here
     ),
     log_output = "logs/crew_log_%A.out",
@@ -53,7 +53,7 @@ controller_hpc_large <- crew.cluster::crew_controller_slurm(
   options_cluster = crew.cluster::crew_options_slurm(
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
-      "module load R"
+      "module load R/4.4"
       #add additional lines to the SLURM job script as necessary here
     ),
     log_output = "logs/crew_log_%A.out",
