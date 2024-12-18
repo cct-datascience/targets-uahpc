@@ -1,2 +1,2 @@
 options("renv.config.pak.enabled" = TRUE)
-source("renv/activate.R")
+# source("renv/activate.R")
