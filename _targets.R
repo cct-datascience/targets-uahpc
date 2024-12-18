@@ -16,46 +16,47 @@ hpc_group <- "kristinariemer"
 slurm_host <- Sys.getenv("SLURM_SUBMIT_HOST")
 hpc <- grepl("hpc\\.arizona\\.edu", slurm_host) & !grepl("ood", slurm_host)
 
-if (tar_active()) {
-  # Set up potential controllers
-  controller <- crew.cluster::crew_controller_slurm(
-    name = "hpc_small",
-    workers = 2,
-    seconds_idle = 300,  # time until workers are shut down after idle
-    slurm_partition = "standard", 
-    slurm_time_minutes = 1200, # wall time for each worker
-    slurm_log_output = "logs/crew_log_%A.out",
-    slurm_log_error = "logs/crew_log_%A.err",
-    slurm_memory_gigabytes_per_cpu = 5,
-    slurm_cpus_per_task = 2, #total 10gb RAM
+
+# Set up potential controllers
+controller <- crew.cluster::crew_controller_slurm(
+  name = "hpc_small",
+  workers = 2,
+  seconds_idle = 300,  # time until workers are shut down after idle
+  options_metrics = crew_options_metrics(
+    path = "/dev/stdout",
+    seconds_interval = 1
+  ),
+  options_cluster = crew.cluster::crew_options_slurm(
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
       "module load R"
       #add additional lines to the SLURM job script as necessary here
-    )
+    ),
+    log_output = "logs/crew_log_%A.out",
+    log_error = "logs/crew_log_%A.err",
+    memory_gigabytes_per_cpu = 5,
+    cpus_per_task = 2, #total 10gb RAM
+    time_minutes = 1200, # wall time for each worker
+    partition = "standard"
   )
-  controller$start()
-  log_start(
-    path = "logs/log.txt",
-    seconds = 1,
-    pids = controller$pids()
-  )
-}
-# 
+)
+
 # controller_hpc_large <- crew.cluster::crew_controller_slurm(
 #   name = "hpc_large",
 #   workers = 2,
-#   seconds_idle = 500, 
-#   slurm_partition = "standard",
-#   slurm_time_minutes = 2000, 
-#   slurm_log_output = "logs/crew_log_%A.out",
-#   slurm_log_error = "logs/crew_log_%A.err",
-#   slurm_memory_gigabytes_per_cpu = 5,
-#   slurm_cpus_per_task = 4, #total 20gb RAM
-#   script_lines = c(
-#     paste0("#SBATCH --account ", hpc_group),
-#     "module load R"
-#     #add additional lines to the SLURM job script as necessary here
+#   seconds_idle = 2000,  # time until workers are shut down after idle
+#   options_cluster = crew.cluster::crew_options_slurm(
+#     script_lines = c(
+#       paste0("#SBATCH --account ", hpc_group),
+#       "module load R"
+#       #add additional lines to the SLURM job script as necessary here
+#     ),
+#     log_output = "logs/crew_log_%A.out",
+#     log_error = "logs/crew_log_%A.err",
+#     memory_gigabytes_per_cpu = 5,
+#     cpus_per_task = 4, #total 10gb RAM
+#     time_minutes = 1200, # wall time for each worker
+#     partition = "standard"
 #   )
 # )
 # 
