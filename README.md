@@ -1,4 +1,4 @@
-# targets-uahpc
+# targets-uahpc: A template to use the {targets} R package with UA-HPC
 
 <!-- badges: start -->
 
