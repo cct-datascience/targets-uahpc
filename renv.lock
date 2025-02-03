@@ -11,7 +11,7 @@
   "Packages": {
     "Matrix": {
       "Package": "Matrix",
-      "Version": "1.7-1",
+      "Version": "1.7-2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -24,7 +24,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "5122bb14d8736372411f955e1b16bc8a"
+      "Hash": "f6a81550f166acbe2cd5229e9ca079b9"
     },
     "R6": {
       "Package": "R6",
@@ -229,7 +229,7 @@
     },
     "crew": {
       "Package": "crew",
-      "Version": "0.10.2",
+      "Version": "1.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -251,7 +251,7 @@
         "tools",
         "utils"
       ],
-      "Hash": "40745863e75317c534992c4796af8c58"
+      "Hash": "7b67c00ac2d9944dfed7cfd04c50afcf"
     },
     "crew.cluster": {
       "Package": "crew.cluster",
@@ -507,7 +507,7 @@
     },
     "igraph": {
       "Package": "igraph",
-      "Version": "2.1.3",
+      "Version": "2.1.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -526,7 +526,7 @@
         "utils",
         "vctrs"
       ],
-      "Hash": "337fa0da3fe0506d235cde01d751b4c3"
+      "Hash": "db7352c3d239d0a319d2e3d0d040ed16"
     },
     "jquerylib": {
       "Package": "jquerylib",
@@ -670,14 +670,14 @@
     },
     "mirai": {
       "Package": "mirai",
-      "Version": "2.0.0",
+      "Version": "2.0.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "nanonext"
       ],
-      "Hash": "5a320761fdcf9f35b224e03634ea09c3"
+      "Hash": "f633fd103a402bcb33207715c53762d5"
     },
     "munsell": {
       "Package": "munsell",
@@ -692,13 +692,13 @@
     },
     "nanonext": {
       "Package": "nanonext",
-      "Version": "1.4.0",
+      "Version": "1.5.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R"
       ],
-      "Hash": "2f9a62823a91f75349099d95c182787c"
+      "Hash": "1862341e221e401096a4c474677561b8"
     },
     "pillar": {
       "Package": "pillar",
@@ -813,14 +813,14 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "1.1.4",
+      "Version": "1.1.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "3eec01f8b1dee337674b2e34ab1f9bc1"
+      "Hash": "724dcc1490cd7071ee75ca2994a5446e"
     },
     "rmarkdown": {
       "Package": "rmarkdown",
@@ -888,13 +888,13 @@
     },
     "secretbase": {
       "Package": "secretbase",
-      "Version": "1.0.3",
+      "Version": "1.0.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R"
       ],
-      "Hash": "eaf84737a6da68c1e843979963c09a6b"
+      "Hash": "f7d036291b5c7393adb5d54926dddfff"
     },
     "shiny": {
       "Package": "shiny",
@@ -971,7 +971,7 @@
     },
     "tarchetypes": {
       "Package": "tarchetypes",
-      "Version": "0.11.0",
+      "Version": "0.12.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -988,11 +988,11 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "cf140014f9d00f97f4bd22d961e20471"
+      "Hash": "f43ef88f0a93e771448f66ae5b75c154"
     },
     "targets": {
       "Package": "targets",
-      "Version": "1.10.0",
+      "Version": "1.10.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1016,7 +1016,7 @@
         "vctrs",
         "yaml"
       ],
-      "Hash": "a214029ecc5431b087cb177fd8e87517"
+      "Hash": "2063e268fc5d602e1bcbd094cd124c65"
     },
     "tibble": {
       "Package": "tibble",
