@@ -6,6 +6,9 @@
 
 <!-- badges: end -->
 
+> [!WARNING]
+> This may not work at this time due to an unknown interaction between updates to the UA HPC and the `crew.cluster` package.  See discussion here for more: https://github.com/wlandau/crew.cluster/issues/50
+
 This is a minimal example of a [`targets`](https://docs.ropensci.org/targets/) workflow that can be run on the [University of Arizona cluster computer](https://uarizona.atlassian.net/wiki/spaces/UAHPC/overview).
 `targets` is an R package for workflow management that can save you time by automatically skipping code that doesn’t need to be re-run when you make changes to your data or code.
 It also makes parallelization relatively easy by allowing you to define each target as a separate SLURM job with the [`crew.cluster`](https://wlandau.github.io/crew.cluster/) package.

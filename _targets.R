@@ -29,6 +29,7 @@ controller_hpc_small <- crew.cluster::crew_controller_slurm(
   #   seconds_interval = 1
   # ),
   options_cluster = crew.cluster::crew_options_slurm(
+    verbose = TRUE, #prints job ID when submitted
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
       "module load R/4.4"
@@ -53,6 +54,7 @@ controller_hpc_large <- crew.cluster::crew_controller_slurm(
   #   seconds_interval = 1
   # ),
   options_cluster = crew.cluster::crew_options_slurm(
+    verbose = TRUE, #prints job ID when submitted
     script_lines = c(
       paste0("#SBATCH --account ", hpc_group),
       "module load R/4.4"
@@ -100,7 +102,7 @@ tar_source()
 tar_plan(
   tar_target(
     data_raw,
-    tibble(x = rnorm(100), y = rnorm(100), z = rnorm(100))
+    tibble(x = rnorm(1000), y = rnorm(1000), z = rnorm(1000))
   ),
   #this just simulates a long-running step
   tar_target(
