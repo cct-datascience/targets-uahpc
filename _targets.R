@@ -21,6 +21,10 @@ hpc <- grepl("hpc\\.arizona\\.edu", slurm_host) & !grepl("ood", slurm_host)
 # Set up potential controllers
 controller_hpc_small <- crew.cluster::crew_controller_slurm(
   name = "hpc_small",
+  #Note: the `host` argument isn't usually needed, but on puma, the default host
+  #IP isn't the correct one to use for workers to communicate with the main
+  #process.  This executes a shell command to return the correct IP address.
+  host = system("ip addr show enp1s0f1np1 | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1", intern = TRUE),
   workers = 2,
   seconds_idle = 300,  # time until workers are shut down after idle
   ## Uncomment to add logging via the autometric package
@@ -46,6 +50,7 @@ controller_hpc_small <- crew.cluster::crew_controller_slurm(
 
 controller_hpc_large <- crew.cluster::crew_controller_slurm(
   name = "hpc_large",
+  host = system("ip addr show enp1s0f1np1 | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1"),
   workers = 2,
   seconds_idle = 300,  # time until workers are shut down after idle
   ## Uncomment to add logging via the autometric package
@@ -87,11 +92,7 @@ tar_option_set(
   resources = tar_resources(
     #if on HPC use "hpc_small" controller by default, otherwise use "local"
     crew = tar_resources_crew(controller = ifelse(hpc, "hpc_small", "local"))
-  ),
-  # It should be safe to assume that all workers have read/write access to the
-  # _targets/ directory.  These setting should speed things up.
-  storage = "worker",
-  retrieval = "worker"
+  )
 )
 
 # Run the R scripts in the R/ folder with your custom functions:

@@ -6,9 +6,6 @@
 
 <!-- badges: end -->
 
-> [!WARNING]
-> This may not work at this time due to an unknown interaction between updates to the UA HPC and the `crew.cluster` package.  See discussion here for more: https://github.com/wlandau/crew.cluster/issues/50
-
 This is a minimal example of a [`targets`](https://docs.ropensci.org/targets/) workflow that can be run on the [University of Arizona cluster computer](https://uarizona.atlassian.net/wiki/spaces/UAHPC/overview).
 `targets` is an R package for workflow management that can save you time by automatically skipping code that doesn’t need to be re-run when you make changes to your data or code.
 It also makes parallelization relatively easy by allowing you to define each target as a separate SLURM job with the [`crew.cluster`](https://wlandau.github.io/crew.cluster/) package.
@@ -37,7 +34,7 @@ See the [targets manual](https://books.ropensci.org/targets/) for more informati
 
 Note that use of the `renv` package for tracking dependencies isn't strictly necessary, but it does simplify package installation on the HPC.
 As you add R packages dependencies, you can use `targets::tar_renv()` to update the `_targets_packages.R` file and then `renv::snapshot()` to add them to `renv.lock`.
-On the HPC, running `renv::restore()` not only installs any missing R packages, it also automatically detects system dependencies and lets you know if they aren't installed.
+On the HPC, running `renv::restore()` not only installs any missing R packages, it also automatically detects system dependencies and lets you know if they aren't installed (or loaded with `module load`).
 
 ## Running the pipeline
 
