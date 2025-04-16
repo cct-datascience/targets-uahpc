@@ -34,7 +34,7 @@ See the [targets manual](https://books.ropensci.org/targets/) for more informati
 
 Note that use of the `renv` package for tracking dependencies isn't strictly necessary, but it does simplify package installation on the HPC.
 As you add R packages dependencies, you can use `targets::tar_renv()` to update the `_targets_packages.R` file and then `renv::snapshot()` to add them to `renv.lock`.
-On the HPC, running `renv::restore()` not only installs any missing R packages, it also automatically detects system dependencies and lets you know if they aren't installed.
+On the HPC, running `renv::restore()` not only installs any missing R packages, it also automatically detects system dependencies and lets you know if they aren't installed (or loaded with `module load`).
 
 ## Running the pipeline
 
