@@ -100,8 +100,8 @@ tar_option_set(
   packages = c("tibble"), # Packages that your targets need for their tasks.
   controller = crew::crew_controller_group(
     controller_local,
-    controller_hpc_small #,
-    # controller_hpc_large
+    controller_hpc_small,
+    controller_hpc_large
   ),
   resources = tar_resources(
     # if on HPC use "hpc_small" controller by default, otherwise use "local"
