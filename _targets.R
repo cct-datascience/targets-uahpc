@@ -117,32 +117,32 @@ tar_source()
 list(
   tar_target(
     data_raw,
-    command = {dplyr::tibble(x = rnorm(1000), y = rnorm(1000), z = rnorm(1000))}
-  )
+    command = tibble(x = rnorm(1000), y = rnorm(1000), z = rnorm(1000))
+  ),
   # this just simulates a long-running step
-  # tar_target(
-  #   data,
-  #   do_stuff(data_raw),
-  # ),
-  # tar_target(
-  #   model1,
-  #   lm(y ~ x, data = data)
-  # ),
-  # # these three models should be run in parallel as three separate SLURM jobs
-  # tar_target(
-  #   model2,
-  #   lm(y ~ x + z, data = data)
-  # ),
-  # tar_target(
-  #   model3,
-  #   lm(y ~ x * z, data = data),
-  #   # for this target only, use a worker with more cores and RAM
-  #   resources = tar_resources(
-  #     crew = tar_resources_crew(controller = ifelse(hpc, "hpc_large", "local"))
-  #   )
-  # ),
-  # tar_target(
-  #   model_compare,
-  #   AIC(model1, model2, model3)
-  # )
+  tar_target(
+    data,
+    do_stuff(data_raw),
+  ),
+  tar_target(
+    model1,
+    lm(y ~ x, data = data)
+  ),
+  # these three models should be run in parallel as three separate SLURM jobs
+  tar_target(
+    model2,
+    lm(y ~ x + z, data = data)
+  ),
+  tar_target(
+    model3,
+    lm(y ~ x * z, data = data),
+    # for this target only, use a worker with more cores and RAM
+    resources = tar_resources(
+      crew = tar_resources_crew(controller = ifelse(hpc, "hpc_large", "local"))
+    )
+  ),
+  tar_target(
+    model_compare,
+    AIC(model1, model2, model3)
+  )
 )
