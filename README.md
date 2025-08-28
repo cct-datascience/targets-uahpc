@@ -67,6 +67,10 @@ SSH into the HPC, navigate to this project, and run `sbatch run.sh`.
 You can watch progress by occasionally running `squeue -u yourusername` to see the workers launch and you can peek at the `logs/` folder.
 You can find the most recently modified log files with something like `ls -lt | head -n 5` and then you can read the logs with `cat targets_main_9814039.out` (or whatever file name you want to read).
 
+## This seems too complicated!
+
+If you need something lighter-weight or have few steps that need parallelization, you can now use [`purrr` + `mirai`](https://www.tidyverse.org/blog/2025/07/purrr-1-1-0-parallel/) to parallelize over multiple SLRUM jobs from the comfort of an R script.  Here's a simple example: https://gist.github.com/Aariq/d52a0d861e5a2c90540548caa47021af
+
 ## Notes:
 
 The `_targets/` store can grow to be quite large depending on the size of data and the number of targets created.
